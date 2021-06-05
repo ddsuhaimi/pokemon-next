@@ -1,26 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import Button from "../components/Button";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 import { useAppContext } from "../context/state";
+import Image from "next/image";
 function Pokemon({ pokemon }) {
     const state = useAppContext();
-
     const onClickBtnCard = () => {
         const { setActivePokemon } = state;
         setActivePokemon(pokemon);
     };
 
-    const name = pokemon.name;
     return (
         <Container className="pokemon">
             <ImageContainer>
                 <PokemonImg src={pokemon.image} alt={pokemon.name} />
+                {/* <Image src={pokemon.image} alt={pokemon.name} layout="fill" /> */}
             </ImageContainer>
             <CardFooter>
                 <div className="left" style={{ textAlign: "left" }}>
-                    <PokemonName className="pokemon__name">{capitalizeFirstLetter(pokemon.name)}</PokemonName>
+                    <PokemonName className="pokemon__name">
+                        {pokemon.name && capitalizeFirstLetter(pokemon.name)}
+                    </PokemonName>
                     {pokemon.nickname && <PokemonNickname>a.k.a {pokemon.nickname}</PokemonNickname>}
                 </div>
                 <div className="right" style={{ position: "relative" }}>
@@ -58,6 +60,7 @@ const Container = styled.div`
 const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
+    height: 150px;
 `;
 const PokemonImg = styled.img`
     width: 150px;

@@ -9,7 +9,7 @@ function Layout(props) {
                 <title>{props.title || ""}</title>
                 <meta name="description" content={props.description || ""} />
                 <meta charSet="UTF-8" />
-                {/* <meta name="theme-color" content={THEME_COLOR} /> */}
+                <meta name="theme-color" content="#1fcc79" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
                 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
                 {/* <link

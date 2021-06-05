@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import PokemonListContainer from "../container/PokemonListContainer";
 import styled from "@emotion/styled";
@@ -10,20 +10,51 @@ import FixedMainContainer from "../container/FixedMainContainer";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMONS } from "../graphql/apis";
 import { useAppContext } from "../context/state";
+import { initializeApollo } from "../lib/apolloClient";
+import { extractNumber } from "../lib/helpers/stringHelper";
 
-export default function Home() {
-    const state = useAppContext();
+const restructuredData = (data) => {
+    let results = [];
+    const keys = Object.keys(data);
 
-    const { loading, error, data } = useQuery(GET_POKEMONS, {
-        variables: {
-            limit: 10,
-            offset: 0,
-        },
+    keys.map((k) => {
+        results = [...results, data[k]];
     });
+    console.log(results);
+    // const test = props.data.map((d) => d);
+    // props.data &&
+    //     props.data.map((d) => {
+    //         results = [...results, d];
+    //     });
+    results.pop();
+    const hasil = {
+        pokemons: {
+            results: results,
+        },
+    };
+
+    return hasil;
+};
+
+export default function Home(props) {
+    const state = useAppContext();
+    const [data, setData] = useState(restructuredData(props.data));
+
+    // const { loading, error, data } = useQuery(GET_POKEMONS, {
+    //     variables: {
+    //         limit: 10,
+    //         offset: 0,
+    //     },
+    // });
 
     useEffect(() => {
         if (data) state.setPokemons(data.pokemons.results);
     }, [data]);
+    // console.log(props.data, data);
+
+    // useEffect(() => {
+    //     if (data) state.setPokemons(data.pokemons.results);
+    // }, [data]);
     return (
         <Layout>
             <Head>
@@ -33,11 +64,29 @@ export default function Home() {
             <Header />
             <MainContainer>
                 <FixedMainContainer>
+                    {/* <PokemonListContainer data={data} /> */}
                     <PokemonListContainer data={data} />
                 </FixedMainContainer>
             </MainContainer>
-
-            <Link href="/pokemons/test">link</Link>
         </Layout>
     );
+}
+
+export async function getStaticProps() {
+    const apolloClient = initializeApollo();
+
+    const res = await apolloClient.query({
+        query: GET_POKEMONS,
+        variables: {
+            limit: 10,
+            offset: 0,
+        },
+    });
+
+    return {
+        props: {
+            data: apolloClient.cache.extract(),
+        },
+        revalidate: 1,
+    };
 }
