@@ -15,17 +15,17 @@ function PokemonListContainer({ data, isOnMyPokemonPage }) {
     // });
 
     // useEffect(() => {
-    //     console.log("state update cuy", state);
-    // }, [state]);
-
-    // useEffect(() => {
     //     if (data) state.setPokemons(data.pokemons.results);
     // }, [data]);
 
     return (
         <Container className="pokemonListContainer">
             {data?.pokemons?.results.map((pokemon, i) => (
-                <PokemonCard key={pokemon.id + (isOnMyPokemonPage ? pokemon.nickname : 0)} pokemon={pokemon} />
+                <PokemonCard
+                    key={pokemon.id + (isOnMyPokemonPage ? pokemon.nickname : 0)}
+                    pokemon={pokemon}
+                    isOnMyPokemonPage={isOnMyPokemonPage}
+                />
             ))}
         </Container>
     );

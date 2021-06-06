@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { useAppContext } from "../context/state";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
@@ -9,8 +9,11 @@ import Modal from "../components/Modal";
 import Input from "../components/Input";
 import AlertMessage from "../components/AlertMessage";
 import Image from "next/image";
+import { useRouter } from "next/router";
 function PokemonDetailContainer(props) {
     const state = useAppContext();
+    const router = useRouter();
+    const inputEl = useRef(null);
 
     const [isCatched, setIsCatched] = useState(false);
     const [hasNickname, setHasNickname] = useState(false);
@@ -28,6 +31,7 @@ function PokemonDetailContainer(props) {
         if (willChange) {
             setIsCatched(true);
             setCatchResult("Success 😀");
+            // console.log("%c inputEl ", "background: #222; color: #bada55", inputEl);
         } else {
             setCatchResult("Failed 😔");
             setTimeout(() => {
@@ -36,12 +40,19 @@ function PokemonDetailContainer(props) {
         }
     };
 
+    useEffect(() => {
+        state.saveState();
+    }, [state]);
+
     const onClickBack = () => {
         state.setActivePokemon(null);
+        router.back();
     };
 
     const getPokemonImage = () => {
-        return state.pokemons.find((p) => p.id === pokemon.id).image;
+        const d = state.pokemons.find((p) => p.id === pokemon.id);
+        console.log("d", state.pokemons, pokemon);
+        return state.pokemons.length > 0 ? state.pokemons.find((p) => p.id === pokemon.id).image : "";
     };
 
     const isDuplicate = () => {
@@ -70,9 +81,11 @@ function PokemonDetailContainer(props) {
             setHasNickname(true);
 
             setMyPokemons([...myPokemons, { id: props.pokemon.id, nickname: inputNicknameValue }]);
+
             cleanup();
         };
         const cleanup = () => {
+            state.saveState();
             setIsCatched(false);
             setHasNickname(false);
             setCatchResult(null);
@@ -109,12 +122,12 @@ function PokemonDetailContainer(props) {
             <Header>
                 <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                     <div style={{ width: "24px", cursor: "pointer" }}>
-                        <Link passHref href="/">
-                            <span onClick={onClickBack}>
-                                <Image src="/chevron-circle-left.svg" height={30} width={30} />
-                                {/* <FontAwesomeIcon size="1x" icon={faChevronCircleLeft}></FontAwesomeIcon> */}
-                            </span>
-                        </Link>
+                        {/* <Link passHref href="/"> */}
+                        <span onClick={onClickBack}>
+                            <Image src="/chevron-circle-left.svg" height={30} width={30} />
+                            {/* <FontAwesomeIcon size="1x" icon={faChevronCircleLeft}></FontAwesomeIcon> */}
+                        </span>
+                        {/* </Link> */}
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         {/* {!isCatched ? "try again" : "success"} */}

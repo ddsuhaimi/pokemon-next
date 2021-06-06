@@ -8,8 +8,9 @@ import Header from "../../components/Header";
 import MainContainer from "../../container/MainContainer";
 import FixedMainContainer from "../../container/FixedMainContainer";
 import PokemonDetailContainer from "../../container/PokemonDetailContainer";
+import { initializeApollo } from "../../lib/apolloClient";
 
-function PokemonDetail() {
+export default function PokemonDetail(props) {
     const router = useRouter();
     console.log("router", router.query);
 
@@ -42,4 +43,22 @@ function PokemonDetail() {
     );
 }
 
-export default PokemonDetail;
+// export async function getServerSideProps() {
+//     // const router = useRouter();
+//     const apolloClient = initializeApollo();
+
+//     const res = await apolloClient.query({
+//         query: GET_POKEMON,
+//         variables: {
+//             name: "ivysaur",
+//         },
+//     });
+//     console.log("res ser", res);
+
+//     return {
+//         props: {
+//             // data: apolloClient.cache.extract(),
+//             data: res.data,
+//         },
+//     };
+// }

@@ -8,6 +8,7 @@ function FixedMainContainer(props) {
 const FixedMainContainerElement = styled.div`
     max-width: 760px;
     display: flex;
+    flex-direction: column;
     flex: 1;
 `;
 

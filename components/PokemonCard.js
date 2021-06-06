@@ -5,17 +5,38 @@ import Button from "../components/Button";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 import { useAppContext } from "../context/state";
 import Image from "next/image";
-function Pokemon({ pokemon }) {
+function Pokemon({ pokemon, isOnMyPokemonPage }) {
     const state = useAppContext();
     const onClickBtnCard = () => {
         const { setActivePokemon } = state;
         setActivePokemon(pokemon);
     };
 
+    const onClickRemove = () => {
+        const { myPokemons } = state;
+        state.setMyPokemons(myPokemons.filter((p) => !(p.id === pokemon.id && p.nickname === pokemon.nickname)));
+    };
     return (
         <Container className="pokemon">
             <ImageContainer>
                 <PokemonImg src={pokemon.image} alt={pokemon.name} />
+
+                {isOnMyPokemonPage && (
+                    <span
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                            fontSize: "1rem",
+                            color: "red",
+                            height: "20px",
+                            width: "20px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        <Image src="/trash-alt.svg" alt="remove" layout="fill" onClick={onClickRemove} />
+                    </span>
+                )}
                 {/* <Image src={pokemon.image} alt={pokemon.name} layout="fill" /> */}
             </ImageContainer>
             <CardFooter>
@@ -61,6 +82,7 @@ const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
     height: 150px;
+    position: relative;
 `;
 const PokemonImg = styled.img`
     width: 150px;

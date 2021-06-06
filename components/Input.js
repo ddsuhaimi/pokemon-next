@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 function Input(props) {
-    return <Container {...props} />;
+    return <Container {...props} autoFocus />;
 }
 
 const Container = styled.input`
