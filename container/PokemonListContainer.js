@@ -20,7 +20,7 @@ function PokemonListContainer({ data, isOnMyPokemonPage }) {
 
     return (
         <Container className="pokemonListContainer">
-            {data?.pokemons?.results.map((pokemon, i) => (
+            {data.pokemons?.results.map((pokemon, i) => (
                 <PokemonCard
                     key={pokemon.id + (isOnMyPokemonPage ? pokemon.nickname : 0)}
                     pokemon={pokemon}

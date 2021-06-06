@@ -15,59 +15,54 @@ import { extractNumber } from "../lib/helpers/stringHelper";
 import LoadMore from "../components/LoadMore";
 import Button from "../components/Button";
 
-const restructuredData = (data) => {
-    let results = [];
-    const keys = Object.keys(data);
-
-    keys.map((k) => {
-        results = [...results, data[k]];
-    });
-    console.log(results);
-    // const test = props.data.map((d) => d);
-    // props.data &&
-    //     props.data.map((d) => {
-    //         results = [...results, d];
-    //     });
-    results.pop();
-    const hasil = {
-        pokemons: {
-            results: results,
-        },
-    };
-
-    return hasil;
-};
-
 export default function Home(props) {
     // saving state immediately because props.data already exist (caused by SSR)
     const state = useAppContext();
-    state.setPokemons(props.data.pokemons.results);
-    const [data, setData] = useState(props.data);
 
-    // const { loading, error, data } = useQuery(GET_POKEMONS, {
-    //     variables: {
-    //         limit: 10,
-    //         offset: 0,
-    //     },
-    // });
+    const [tdata, setTData] = useState(props.data);
+    const [next, setNext] = useState(props.data.pokemons.results.length);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    const { loading, error, data, fetchMore } = useQuery(GET_POKEMONS, {
+        variables: {
+            limit: 10,
+            offset: next,
+        },
+    });
 
     useEffect(() => {
-        state.saveState();
-    }, [state]);
+        if (!isLoadingMore && data) {
+            const currentPokemons = state.pokemons;
+            const newPokemons = data.pokemons.results;
+            const allPokemons = currentPokemons.concat(newPokemons);
+            state.setPokemons(allPokemons);
+            setNext(allPokemons.length);
+        }
+    }, [isLoadingMore]);
 
-    console.log("data, state", data, state);
+    const onClickLoadMore = async () => {
+        setIsLoadingMore(true);
+        await fetchMore({
+            variables: {
+                // limit: data.launches.cursor,
+                limit: 10,
+                offset: 9,
+            },
+        });
+
+        setIsLoadingMore(false);
+    };
+
     useEffect(() => {
         state.setPokemons(props.data.pokemons.results);
-        setData(props.data);
-    });
+        setTData(props.data);
+    }, []);
+
     // console.log(props.data, data);
 
     // useEffect(() => {
     //     if (data) state.setPokemons(data.pokemons.results);
     // }, [data]);
-    const onClickLoadMore = () => {
-        console.log("run");
-    };
     return (
         <Layout>
             <Head>
@@ -77,9 +72,10 @@ export default function Home(props) {
             <Header />
             <MainContainer>
                 <FixedMainContainer>
-                    <PokemonListContainer data={data} />
+                    <PokemonListContainer data={{ pokemons: { results: state.pokemons } }} />
                     <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
-                        <Button onClick={onClickLoadMore}>Load more</Button>
+                        {/* <Button onClick={onClickLoadMore}>Load more</Button> */}
+                        {props.data && <Button onClick={onClickLoadMore}>Load more</Button>}
                     </div>
                 </FixedMainContainer>
             </MainContainer>
@@ -97,8 +93,6 @@ export async function getServerSideProps() {
             offset: 0,
         },
     });
-
-    console.log("res", res);
 
     return {
         props: {

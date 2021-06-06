@@ -12,7 +12,6 @@ import { initializeApollo } from "../../lib/apolloClient";
 
 export default function PokemonDetail(props) {
     const router = useRouter();
-    console.log("router", router.query);
 
     const { loading, error, data } = useQuery(GET_POKEMON, {
         variables: {
