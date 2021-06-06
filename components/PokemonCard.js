@@ -19,7 +19,7 @@ function Pokemon({ pokemon, isOnMyPokemonPage }) {
     return (
         <Container className="pokemon">
             <ImageContainer>
-                <PokemonImg src={pokemon.image} alt={pokemon.name} />
+                <PokemonImg src={pokemon.image} alt={pokemon.name} width={150} height={150} />
 
                 {isOnMyPokemonPage && (
                     <span

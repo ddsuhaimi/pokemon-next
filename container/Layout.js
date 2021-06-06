@@ -10,6 +10,11 @@ function Layout(props) {
                 <meta name="description" content={props.description || ""} />
                 <meta charSet="UTF-8" />
                 <meta name="theme-color" content="#1fcc79" />
+                {/* <link
+                    rel="preload"
+                    as="image"
+                    href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+                /> */}
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
                 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
                 {/* <link
@@ -33,7 +38,6 @@ const Container = styled.main`
     background-color: #f4f5f7;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
         Droid Sans, Helvetica Neue, sans-serif;
-    height: 100vh;
 `;
 
 export default Layout;

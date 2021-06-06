@@ -10,13 +10,13 @@ export function AppWrapper({ children }) {
     const [myPokemons, setMyPokemons] = useState([]);
 
     const saveState = () => {
-        console.log("1[state.js]saveState", pokemons, myPokemons);
+        // console.log("1[state.js]saveState", pokemons, myPokemons);
         const state = {
             pokemons: pokemons,
             activePokemon: activePokemon,
             myPokemons: myPokemons,
         };
-        console.log("2[state.js]saveState", state);
+        // console.log("2[state.js]saveState", state);
         localStorage.setItem("state", JSON.stringify(state));
     };
 

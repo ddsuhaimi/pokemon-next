@@ -21,6 +21,7 @@ export default function Home(props) {
 
     const [tdata, setTData] = useState(props.data);
     const [next, setNext] = useState(props.data.pokemons.results.length);
+    const [showReadMore, setShowReadMore] = useState(null);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const { loading, error, data, fetchMore } = useQuery(GET_POKEMONS, {
@@ -54,8 +55,11 @@ export default function Home(props) {
     };
 
     useEffect(() => {
-        state.setPokemons(props.data.pokemons.results);
+        if (props.data.pokemons.results.length <= state.pokemons || state.pokemons.length === 0) {
+            state.setPokemons(props.data.pokemons.results);
+        }
         setTData(props.data);
+        setShowReadMore(true);
     }, []);
 
     // console.log(props.data, data);
@@ -75,7 +79,7 @@ export default function Home(props) {
                     <PokemonListContainer data={{ pokemons: { results: state.pokemons } }} />
                     <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
                         {/* <Button onClick={onClickLoadMore}>Load more</Button> */}
-                        {props.data && <Button onClick={onClickLoadMore}>Load more</Button>}
+                        {showReadMore && <Button onClick={onClickLoadMore}>Load more</Button>}
                     </div>
                 </FixedMainContainer>
             </MainContainer>
