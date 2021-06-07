@@ -22,6 +22,7 @@ export default function PokemonDetail(props) {
     const renderPokemonDetailContainer = () => {
         if (error) return <div>Error loading players.</div>;
         if (loading) return <div>Loading</div>;
+        console.log(data);
 
         return <PokemonDetailContainer pokemon={data.pokemon} />;
     };

@@ -45,7 +45,7 @@ function index() {
             <Header />
             <MainContainer>
                 <FixedMainContainer>
-                    {state.myPokemons.length > 0 ? (
+                    {state.myPokemons.length > 0 && state.pokemons.length > 0 ? (
                         <PokemonListContainer data={data} isOnMyPokemonPage={true} />
                     ) : (
                         noPokemon()

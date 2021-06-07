@@ -140,11 +140,30 @@ function PokemonDetailContainer(props) {
                     </div>
                 </div>
                 <PokemonName>{capitalizeFirstLetter(pokemon.name)}</PokemonName>
-                <TypeLabelGroup types={pokemon.types} />
+                {/* <TypeLabelGroup types={pokemon.types} /> */}
             </Header>
-            <div style={{ width: "100%" }}>
-                <PokemonImage src={getPokemonImage()} alt={pokemon.name} />
-            </div>
+            <ImageMove>
+                <PokemonImageContainer>
+                    <PokemonImage
+                        src={getPokemonImage()}
+                        alt={pokemon.name}
+                        layout="responsive"
+                        width={300}
+                        height={300}
+                    />
+                    <div>
+                        Types: <TypeLabelGroup types={pokemon.types} />
+                    </div>
+                </PokemonImageContainer>
+                <MoveContainer>
+                    <h3 className="move-title">Moves: </h3>
+                    <div className="move-list">
+                        {pokemon.moves.map((move) => (
+                            <MoveLabel style={{ paddingRight: 5, paddingLeft: 5 }}>{move.move.name}</MoveLabel>
+                        ))}
+                    </div>
+                </MoveContainer>
+            </ImageMove>
         </Container>
     );
 }
@@ -152,16 +171,58 @@ function PokemonDetailContainer(props) {
 export default PokemonDetailContainer;
 
 const Container = styled.div`
-    width: 100%;
     background: white;
     height: 100vh;
     padding: 1em;
 `;
 
+const PokemonImageContainer = styled.div`
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    flex-direction: column;
+`;
+
 const PokemonImage = styled.img`
-    width: 100%;
-    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+    object-fit: contain;
     border-radius: 16px;
+    margin: 0 auto;
+    flex-grow: 1;
+`;
+
+const ImageMove = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    > div {
+        margin-top: 1rem;
+    }
+`;
+
+const MoveLabel = styled.span`
+    padding: 0px 7px;
+    border: 1px solid #3e5481;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    line-height: 1rem;
+`;
+
+const MoveContainer = styled.div`
+    padding: 1rem;
+    background: #ececec;
+    border-radius: 10px;
+    .move-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .move-title {
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #3e5481;
+    }
 `;
 const PokemonName = styled.div`
     font-size: 1.5rem;

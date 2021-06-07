@@ -47,7 +47,7 @@ export default function Home(props) {
             variables: {
                 // limit: data.launches.cursor,
                 limit: 10,
-                offset: 9,
+                offset: next,
             },
         });
 

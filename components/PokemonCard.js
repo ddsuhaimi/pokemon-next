@@ -4,9 +4,11 @@ import styled from "@emotion/styled";
 import Button from "../components/Button";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 import { useAppContext } from "../context/state";
+import { useRouter } from "next/router";
 import Image from "next/image";
 function Pokemon({ pokemon, isOnMyPokemonPage }) {
     const state = useAppContext();
+    const router = useRouter();
     const onClickBtnCard = () => {
         const { setActivePokemon } = state;
         setActivePokemon(pokemon);
@@ -16,8 +18,15 @@ function Pokemon({ pokemon, isOnMyPokemonPage }) {
         const { myPokemons } = state;
         state.setMyPokemons(myPokemons.filter((p) => !(p.id === pokemon.id && p.nickname === pokemon.nickname)));
     };
+    const onClickCard = () => {
+        router.push(`/pokemons/${pokemon.name}`);
+    };
+
+    const getNumberOfOwn = () => {
+        return state.myPokemons.filter((p) => p.id === pokemon.id).length;
+    };
     return (
-        <Container className="pokemon">
+        <Container className="pokemon" onClick={onClickCard}>
             <ImageContainer>
                 <PokemonImg src={pokemon.image} alt={pokemon.name} width={150} height={150} />
 
@@ -47,16 +56,17 @@ function Pokemon({ pokemon, isOnMyPokemonPage }) {
                     {pokemon.nickname && <PokemonNickname>a.k.a {pokemon.nickname}</PokemonNickname>}
                 </div>
                 <div className="right" style={{ position: "relative" }}>
-                    <BtnAction>
+                    {!isOnMyPokemonPage && <p>owned: {getNumberOfOwn()}</p>}
+                    {/* owned:  {getNumberOfOwn()} */}
+                    {/* <BtnAction>
                         <Link
-                            onClick={() => console.log("clikc card")}
                             href={{
                                 pathname: `/pokemons/${pokemon.name}`,
                             }}
                         >
                             <Button onClick={onClickBtnCard}>More...</Button>
                         </Link>
-                    </BtnAction>
+                    </BtnAction> */}
                 </div>
             </CardFooter>
             {/* <div className="pokemon__detail">
@@ -77,6 +87,12 @@ const Container = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    cursor: pointer;
+    transition: transform 250ms;
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 50px 0px;
+    }
 `;
 const ImageContainer = styled.div`
     display: flex;
