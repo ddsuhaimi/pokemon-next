@@ -151,15 +151,15 @@ function PokemonDetailContainer(props) {
                         width={300}
                         height={300}
                     />
-                    <div>
-                        Types: <TypeLabelGroup types={pokemon.types} />
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <span style={{ marginRight: "10px" }}>Types: </span> <TypeLabelGroup types={pokemon.types} />
                     </div>
                 </PokemonImageContainer>
                 <MoveContainer>
                     <h3 className="move-title">Moves: </h3>
                     <div className="move-list">
                         {pokemon.moves.map((move) => (
-                            <MoveLabel style={{ paddingRight: 5, paddingLeft: 5 }}>{move.move.name}</MoveLabel>
+                            <MoveLabel key={move.move.name} style={{ paddingRight: 5, paddingLeft: 5 }}>{move.move.name}</MoveLabel>
                         ))}
                     </div>
                 </MoveContainer>
@@ -172,7 +172,6 @@ export default PokemonDetailContainer;
 
 const Container = styled.div`
     background: white;
-    height: 100vh;
     padding: 1em;
 `;
 

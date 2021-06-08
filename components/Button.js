@@ -13,7 +13,7 @@ const Button = React.forwardRef(({ onClick, href, children, disabled }, ref) => 
 });
 
 const ButtonContainer = styled.button`
-    color: ${(props) => (props.disabled ? "#ccc" : "#000")};
+    color: ${(props) => (props.disabled ? "#ccc" : "#fff")};
     background-color: ${(props) => (props.disabled ? "#F4F5F7" : "#1fcc79")};
     border: none;
     border-radius: 32px;
