@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
-function AbilityLabel({ ability }) {
+
+const AbilityLabel = ({ ability }) => {
     return <Container className="ability-item">{ability.ability.name}</Container>;
-}
+};
 
 const Container = styled.span`
     padding-left: 10px;

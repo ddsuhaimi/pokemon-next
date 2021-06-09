@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
+import styled from "@emotion/styled";
+import Link from "next/link";
+
+import { useAppContext } from "../../context/state";
+
 import FixedMainContainer from "../../container/FixedMainContainer";
+import Header from "../../components/Header";
 import Layout from "../../container/Layout";
 import MainContainer from "../../container/MainContainer";
 import PokemonListContainer from "../../container/PokemonListContainer";
-import { useAppContext } from "../../context/state";
-import Link from "next/link";
 
-function index() {
+const Index = () => {
     const [pokemons, setPokemons] = useState([]);
     const state = useAppContext();
 
@@ -25,36 +28,46 @@ function index() {
         setPokemons(data);
     };
 
-    const noPokemon = () => {
+    const renderNoPokemon = () => {
         return (
-            <div style={{ width: "100%", padding: "1rem", height: "300px", background: "#fff" }}>
-                <p style={{ fontSize: "1.2rem", marginBottom: "1rem" }}>😟You have no pokemons.</p>
-                <p style={{ color: "#9FA5C0", fontStyle: "normal" }}>
+            <NoPokemon>
+                <p className="headline">😟You have no pokemons.</p>
+                <p className="info">
                     Go to <Link href="/">Index page</Link> to add one.
                 </p>
-            </div>
+            </NoPokemon>
         );
     };
 
     return (
-        <Layout>
+        <Layout title={"Pokedex | My pokemon"} description={"My pokemon list"}>
             <Header />
             <MainContainer>
                 <FixedMainContainer>
                     {state.myPokemons.length > 0 && state.pokemons.length > 0 ? (
                         <PokemonListContainer pokemons={pokemons} isOnMyPokemonPage={true} />
                     ) : (
-                        noPokemon()
+                        renderNoPokemon()
                     )}
-
-                    {/* {state.myPokemons.length > 0 ? (
-                    ) : (
-                        noPokemon()
-                    )} */}
                 </FixedMainContainer>
             </MainContainer>
         </Layout>
     );
-}
+};
 
-export default index;
+const NoPokemon = styled.div`
+    width: 100%;
+    padding: 1rem;
+    height: 300px;
+    text-align: center;
+    .headline {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    .info {
+        color: #9fa5c0;
+        font-style: normal;
+    }
+`;
+
+export default Index;

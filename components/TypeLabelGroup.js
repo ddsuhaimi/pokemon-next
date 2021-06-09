@@ -1,8 +1,9 @@
 import React from "react";
-import TypeLabel from "./TypeLabel";
 import styled from "@emotion/styled";
 
-function TypeLabelGroup({ types }) {
+import TypeLabel from "./TypeLabel";
+
+const TypeLabelGroup = ({ types }) => {
     return (
         <Container>
             {types.map((type, i) => (
@@ -10,7 +11,7 @@ function TypeLabelGroup({ types }) {
             ))}
         </Container>
     );
-}
+};
 
 const Container = styled.div`
     margin-top: 0.5em;

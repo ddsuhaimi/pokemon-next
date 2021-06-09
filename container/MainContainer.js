@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
-function MainContainer(props) {
+
+const MainContainer = (props) => {
     return <MainContainerElement>{props.children}</MainContainerElement>;
-}
+};
 
 const MainContainerElement = styled.main`
     padding: 1rem;

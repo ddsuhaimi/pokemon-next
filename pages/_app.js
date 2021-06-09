@@ -1,9 +1,10 @@
 import "../styles/reset.css";
+import "../styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../lib/apolloClient";
 import { AppWrapper } from "../context/state";
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
     const apolloClient = useApollo(pageProps.initialApolloState);
 
     return (
@@ -15,6 +16,6 @@ function MyApp({ Component, pageProps }) {
             </AppWrapper>
         </ApolloProvider>
     );
-}
+};
 
 export default MyApp;

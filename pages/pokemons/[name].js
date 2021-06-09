@@ -1,16 +1,18 @@
 import React from "react";
+import Link from "next/link";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { GET_POKEMON } from "../../graphql/apis";
-import Link from "next/link";
-import Layout from "../../container/Layout";
-import Header from "../../components/Header";
-import MainContainer from "../../container/MainContainer";
-import FixedMainContainer from "../../container/FixedMainContainer";
-import PokemonDetailContainer from "../../container/PokemonDetailContainer";
-import { initializeApollo } from "../../lib/apolloClient";
 
-export default function PokemonDetail(props) {
+import FixedMainContainer from "../../container/FixedMainContainer";
+import Header from "../../components/Header";
+import Layout from "../../container/Layout";
+import MainContainer from "../../container/MainContainer";
+import PokemonDetailContainer from "../../container/PokemonDetailContainer";
+
+import { initializeApollo } from "../../lib/apolloClient";
+import { GET_POKEMON } from "../../graphql/apis";
+
+const PokemonDetail = (props) => {
     const router = useRouter();
 
     const { loading, error, data } = useQuery(GET_POKEMON, {
@@ -22,26 +24,20 @@ export default function PokemonDetail(props) {
     const renderPokemonDetailContainer = () => {
         if (error) return <div>Error loading players.</div>;
         if (loading) return <div>Loading</div>;
-        console.log(data);
 
         return <PokemonDetailContainer pokemon={data.pokemon} />;
     };
     return (
-        <Layout>
+        <Layout title={`Pokedex | ${router.query.name}`} description={`Detail for ${router.query.name}`}>
             <Header />
             <MainContainer>
                 <FixedMainContainer>{renderPokemonDetailContainer()}</FixedMainContainer>
             </MainContainer>
         </Layout>
-        // <div>
-        //     <div className="back-btn">
-        //         <Link href="/">
-        //             <button>Back to list</button>
-        //         </Link>
-        //     </div>
-        // </div>
     );
-}
+};
+
+export default PokemonDetail;
 
 // export async function getServerSideProps() {
 //     // const router = useRouter();

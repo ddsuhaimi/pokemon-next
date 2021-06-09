@@ -1,5 +1,3 @@
-// src/context/state.js
-
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AppContext = createContext();

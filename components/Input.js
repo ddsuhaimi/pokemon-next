@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-function Input(props) {
+
+const Input = (props) => {
     return <Container {...props} autoFocus />;
-}
+};
 
 const Container = styled.input`
     background-color: #f4f5f7;

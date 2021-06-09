@@ -1,9 +1,9 @@
 import React from "react";
-import AbilityLabel from "./AbilityLabel";
 import styled from "@emotion/styled";
 
-function AbilityLabelGroup({ abilities }) {
-    console.log("aksjdfa", abilities);
+import AbilityLabel from "./AbilityLabel";
+
+const AbilityLabelGroup = ({ abilities }) => {
     return (
         <Container>
             {abilities.map((ability, i) => (
@@ -11,7 +11,7 @@ function AbilityLabelGroup({ abilities }) {
             ))}
         </Container>
     );
-}
+};
 
 const Container = styled.div`
     margin-top: 0.5em;

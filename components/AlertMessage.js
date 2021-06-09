@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
-function AlertMessage({ text, icon }) {
+
+const AlertMessage = ({ text, icon }) => {
     return (
         <Container>
             <Icon>{icon}</Icon>
             <div>{text}</div>
         </Container>
     );
-}
+};
 
 const Container = styled.div`
     font-size: 0.8rem;

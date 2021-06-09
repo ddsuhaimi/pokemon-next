@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 import { useAppContext } from "../context/state";
 import { useRouter } from "next/router";
-function Pokemon({ pokemon, isOnMyPokemonPage }) {
+const Pokemon = ({ pokemon, isOnMyPokemonPage }) => {
     const state = useAppContext();
     const router = useRouter();
 
@@ -52,7 +52,7 @@ function Pokemon({ pokemon, isOnMyPokemonPage }) {
             </CardFooter>
         </Container>
     );
-}
+};
 
 const Container = styled.div`
     padding: 1rem;
@@ -86,10 +86,7 @@ const PokemonName = styled.div`
     font-size: 1.2rem;
     color: #3e5481;
 `;
-const BtnAction = styled.div`
-    display: flex;
-    justify-content: flex-end;
-`;
+
 const PokemonNickname = styled.div`
     color: #9fa5c0;
 `;

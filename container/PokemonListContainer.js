@@ -1,23 +1,9 @@
-import React, { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_POKEMONS } from "../graphql/apis";
-import PokemonCard from "../components/PokemonCard";
+import React from "react";
 import styled from "@emotion/styled";
-import { useAppContext } from "../context/state";
 
-function PokemonListContainer({ pokemons, isOnMyPokemonPage }) {
-    // const state = useAppContext();
-    // const { loading, error, data } = useQuery(GET_POKEMONS, {
-    //     variables: {
-    //         limit: 10,
-    //         offset: 0,
-    //     },
-    // });
+import PokemonCard from "../components/PokemonCard";
 
-    // useEffect(() => {
-    //     if (data) state.setPokemons(data.pokemons.results);
-    // }, [data]);
-
+const PokemonListContainer = ({ pokemons, isOnMyPokemonPage }) => {
     return (
         <Container className="pokemonListContainer">
             {pokemons.map((pokemon, i) => (
@@ -29,7 +15,7 @@ function PokemonListContainer({ pokemons, isOnMyPokemonPage }) {
             ))}
         </Container>
     );
-}
+};
 
 const Container = styled.div`
     width: 100%;

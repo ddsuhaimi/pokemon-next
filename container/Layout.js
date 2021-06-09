@@ -1,65 +1,15 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Head from "next/head";
-
-function Layout(props) {
+import Meta from "./Meta";
+const Layout = (props) => {
     return (
         <>
-            <Head>
-                <title>{props.title || ""}</title>
-                <meta name="description" content={props.description || ""} />
-                <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5" />
-                <meta name="keywords" content="Keywords" />
-
-                <meta charSet="UTF-8" />
-                <meta name="theme-color" content="#1fcc79" />
-                {/* <link
-                    rel="preload"
-                    as="image"
-                    href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
-                /> */}
-                <link rel="manifest" href="/manifest.json" />
-                <link rel="stylesheet" href="/css/fontawesome.min.css" />
-                <link rel="stylesheet" href="/css/solid.min.css" />
-                {/* <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css"
-                    integrity="sha512-jQqzj2vHVxA/yCojT8pVZjKGOe9UmoYvnOuM/2sQ110vxiajBU+4WkyRs1ODMmd4AfntwUEV4J+VfM6DkfjLRg=="
-                    crossorigin="anonymous"
-                    referrerpolicy="no-referrer"
-                /> */}
-                {/* <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-                    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-                    crossorigin="anonymous"
-                    referrerpolicy="no-referrer"
-                /> */}
-
-                <link rel="preconnect" href="https://fonts.gstatic.com" />
-                <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-                {/* <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-                    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-                    crossorigin="anonymous"
-                    referrerpolicy="no-referrer"
-                /> */}
-                {/* <link rel="icon" sizes="192x192" href="/static/images/icons-192.png" />
-                <link rel="apple-touch-icon" href="/static/images/icons-192.png" />
-                <link rel="icon" href="/static/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" /> */}
-                <link href="/icons/icon-192x192.png" rel="icon" type="image/png" sizes="192x192" />
-                <link href="/icons/icon-256x256.png" rel="icon" type="image/png" sizes="256x256" />
-                <link href="/icons/icon-384x384.png" rel="icon" type="image/png" sizes="384x384" />
-                <link href="/icons/icon-512x512.png" rel="icon" type="image/png" sizes="512x512" />
-                <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-            </Head>
+            <Meta title={props.title} description={props.description} />
             <Container>{props.children}</Container>
         </>
     );
-}
+};
 
 const Container = styled.main`
     background-color: #f4f5f7;

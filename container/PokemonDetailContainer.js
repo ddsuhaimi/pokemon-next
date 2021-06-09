@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
-import styled from "@emotion/styled";
-import { useAppContext } from "../context/state";
-import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
-import Button from "../components/Button";
-import TypeLabelGroup from "../components/TypeLabelGroup";
-import AbilityLabelGroup from "../components/AbilityLabelGroup";
-import Modal from "../components/Modal";
-import Input from "../components/Input";
-import AlertMessage from "../components/AlertMessage";
 import { useRouter } from "next/router";
-function PokemonDetailContainer(props) {
+import styled from "@emotion/styled";
+
+import { useAppContext } from "../context/state";
+
+import AbilityLabelGroup from "../components/AbilityLabelGroup";
+import AlertMessage from "../components/AlertMessage";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Modal from "../components/Modal";
+import TypeLabelGroup from "../components/TypeLabelGroup";
+
+import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
+
+const PokemonDetailContainer = ({ pokemon }) => {
     const state = useAppContext();
     const router = useRouter();
 
@@ -19,7 +23,20 @@ function PokemonDetailContainer(props) {
     const [inputNicknameValue, setInputNicknameValue] = useState("");
     const [catchResult, setCatchResult] = useState(null);
 
-    const { pokemon } = props;
+    useEffect(() => {
+        state.saveState();
+    }, [state]);
+
+    useEffect(() => {
+        if (!showDuplicateNickname && isDuplicate(inputNicknameValue)) {
+            setShowDuplicateNickame(true);
+        }
+
+        if (showDuplicateNickname && !isDuplicate(inputNicknameValue)) {
+            setShowDuplicateNickame(false);
+        }
+    }, [inputNicknameValue]);
+
     const onCLickCatch = () => {
         setCatchResult(null);
 
@@ -35,10 +52,6 @@ function PokemonDetailContainer(props) {
         }
     };
 
-    useEffect(() => {
-        state.saveState();
-    }, [state]);
-
     const onClickBack = () => {
         state.setActivePokemon(null);
         router.back();
@@ -52,15 +65,6 @@ function PokemonDetailContainer(props) {
     const isDuplicate = () => {
         return state.myPokemons.filter((p) => p.id === pokemon.id && p.nickname === inputNicknameValue).length > 0;
     };
-    useEffect(() => {
-        if (!showDuplicateNickname && isDuplicate(inputNicknameValue)) {
-            setShowDuplicateNickame(true);
-        }
-
-        if (showDuplicateNickname && !isDuplicate(inputNicknameValue)) {
-            setShowDuplicateNickame(false);
-        }
-    }, [inputNicknameValue]);
 
     const renderModalInputNickname = () => {
         const onClickGiveNickname = () => {
@@ -72,7 +76,7 @@ function PokemonDetailContainer(props) {
         const onClickConfirm = () => {
             const { myPokemons, setMyPokemons } = state;
             setHasNickname(true);
-            setMyPokemons([...myPokemons, { id: props.pokemon.id, nickname: inputNicknameValue }]);
+            setMyPokemons([...myPokemons, { id: pokemon.id, nickname: inputNicknameValue }]);
             cleanup();
         };
         const cleanup = () => {
@@ -105,6 +109,7 @@ function PokemonDetailContainer(props) {
             </Modal>
         );
     };
+
     return (
         <Container>
             {isCatched && !hasNickname && renderModalInputNickname()}
@@ -162,7 +167,7 @@ function PokemonDetailContainer(props) {
             </ImageMove>
         </Container>
     );
-}
+};
 
 export default PokemonDetailContainer;
 
