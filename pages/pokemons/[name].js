@@ -14,7 +14,6 @@ import { GET_POKEMON } from "../../graphql/apis";
 import InfoState from "../../components/InfoState";
 
 const PokemonDetail = (props) => {
-    console.log(props);
     const router = useRouter();
 
     const { loading, error, data } = useQuery(GET_POKEMON, {
