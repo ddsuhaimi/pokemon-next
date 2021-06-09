@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 
@@ -8,7 +8,6 @@ import Button from "../components/Button";
 import FixedMainContainer from "../container/FixedMainContainer";
 import Header from "../components/Header";
 import Layout from "../container/Layout";
-import LoadMore from "../components/LoadMore";
 import MainContainer from "../container/MainContainer";
 import PokemonListContainer from "../container/PokemonListContainer";
 
@@ -17,6 +16,7 @@ import { GET_POKEMONS } from "../graphql/apis";
 
 const Home = (props) => {
     const state = useAppContext();
+    const firstUpdate = useRef(true);
 
     const [pokemons, setPokemons] = useState(state.pokemons);
     const [showReadMore, setShowReadMore] = useState(null);
@@ -39,9 +39,14 @@ const Home = (props) => {
             state.setPokemons(state.pokemons);
             setShowReadMore(true);
         }
-    }, [state]);
+    }, [state.pokemons]);
 
     useEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+
         if (!isLoadingMore && data) {
             const currentPokemons = pokemons;
             const newPokemons = data.pokemons.results;

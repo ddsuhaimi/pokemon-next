@@ -1,6 +1,5 @@
 import React from "react";
-import Link from "next/link";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
 import FixedMainContainer from "../../container/FixedMainContainer";
@@ -9,7 +8,6 @@ import Layout from "../../container/Layout";
 import MainContainer from "../../container/MainContainer";
 import PokemonDetailContainer from "../../container/PokemonDetailContainer";
 
-import { initializeApollo } from "../../lib/apolloClient";
 import { GET_POKEMON } from "../../graphql/apis";
 import InfoState from "../../components/InfoState";
 
