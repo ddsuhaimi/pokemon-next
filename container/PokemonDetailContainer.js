@@ -57,11 +57,6 @@ const PokemonDetailContainer = ({ pokemon }) => {
         router.back();
     };
 
-    const getPokemonImage = () => {
-        const d = state.pokemons.find((p) => p.id === pokemon.id);
-        return state.pokemons.length > 0 ? state.pokemons.find((p) => p.id === pokemon.id).image : "";
-    };
-
     const isDuplicate = () => {
         return state.myPokemons.filter((p) => p.id === pokemon.id && p.nickname === inputNicknameValue).length > 0;
     };
@@ -133,7 +128,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
             </Header>
             <ImageMove>
                 <PokemonImageInfoContainer>
-                    <PokemonImage src={getPokemonImage()} alt={pokemon.name} width={300} height={300} />
+                    <PokemonImage src={pokemon.sprites.front_default} alt={pokemon.name} width={300} height={300} />
                     <InfoContainer>
                         <HeightWeight>
                             <div className="block">

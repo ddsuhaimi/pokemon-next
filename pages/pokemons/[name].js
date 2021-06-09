@@ -11,8 +11,10 @@ import PokemonDetailContainer from "../../container/PokemonDetailContainer";
 
 import { initializeApollo } from "../../lib/apolloClient";
 import { GET_POKEMON } from "../../graphql/apis";
+import InfoState from "../../components/InfoState";
 
 const PokemonDetail = (props) => {
+    console.log(props);
     const router = useRouter();
 
     const { loading, error, data } = useQuery(GET_POKEMON, {
@@ -22,8 +24,7 @@ const PokemonDetail = (props) => {
     });
 
     const renderPokemonDetailContainer = () => {
-        if (error) return <div>Error loading players.</div>;
-        if (loading) return <div>Loading</div>;
+        if (error || loading) return <InfoState state={loading ? "loading" : "error"} />;
 
         return <PokemonDetailContainer pokemon={data.pokemon} />;
     };
@@ -38,23 +39,3 @@ const PokemonDetail = (props) => {
 };
 
 export default PokemonDetail;
-
-// export async function getServerSideProps() {
-//     // const router = useRouter();
-//     const apolloClient = initializeApollo();
-
-//     const res = await apolloClient.query({
-//         query: GET_POKEMON,
-//         variables: {
-//             name: "ivysaur",
-//         },
-//     });
-//     console.log("res ser", res);
-
-//     return {
-//         props: {
-//             // data: apolloClient.cache.extract(),
-//             data: res.data,
-//         },
-//     };
-// }

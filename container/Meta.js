@@ -16,9 +16,6 @@ function Meta(props) {
             <link rel="stylesheet" href="/css/fontawesome.min.css" />
             <link rel="stylesheet" href="/css/solid.min.css" />
 
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-
             <link href="/icons/icon-192x192.png" rel="icon" type="image/png" sizes="192x192" />
             <link href="/icons/icon-256x256.png" rel="icon" type="image/png" sizes="256x256" />
             <link href="/icons/icon-384x384.png" rel="icon" type="image/png" sizes="384x384" />

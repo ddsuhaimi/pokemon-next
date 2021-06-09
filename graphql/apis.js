@@ -24,6 +24,9 @@ export const GET_POKEMON = gql`
             name
             height
             weight
+            sprites {
+                front_default
+            }
             abilities {
                 ability {
                     name
