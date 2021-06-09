@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAppContext } from "../context/state";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 import Button from "../components/Button";
 import TypeLabelGroup from "../components/TypeLabelGroup";
-import Link from "next/link";
+import AbilityLabelGroup from "../components/AbilityLabelGroup";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
 import AlertMessage from "../components/AlertMessage";
-import Image from "next/image";
 import { useRouter } from "next/router";
 function PokemonDetailContainer(props) {
     const state = useAppContext();
     const router = useRouter();
-    const inputEl = useRef(null);
 
     const [isCatched, setIsCatched] = useState(false);
     const [hasNickname, setHasNickname] = useState(false);
@@ -21,17 +19,14 @@ function PokemonDetailContainer(props) {
     const [inputNicknameValue, setInputNicknameValue] = useState("");
     const [catchResult, setCatchResult] = useState(null);
 
-    const { activePokemon } = state;
     const { pokemon } = props;
     const onCLickCatch = () => {
         setCatchResult(null);
-        const willChange = Math.random() < 0.5;
-        console.log(willChange);
 
+        const willChange = Math.random() < 0.5;
         if (willChange) {
             setIsCatched(true);
             setCatchResult("Success 😀");
-            // console.log("%c inputEl ", "background: #222; color: #bada55", inputEl);
         } else {
             setCatchResult("Failed 😔");
             setTimeout(() => {
@@ -51,7 +46,6 @@ function PokemonDetailContainer(props) {
 
     const getPokemonImage = () => {
         const d = state.pokemons.find((p) => p.id === pokemon.id);
-        console.log("d", state.pokemons, pokemon);
         return state.pokemons.length > 0 ? state.pokemons.find((p) => p.id === pokemon.id).image : "";
     };
 
@@ -59,7 +53,6 @@ function PokemonDetailContainer(props) {
         return state.myPokemons.filter((p) => p.id === pokemon.id && p.nickname === inputNicknameValue).length > 0;
     };
     useEffect(() => {
-        console.log(showDuplicateNickname, isDuplicate(inputNicknameValue));
         if (!showDuplicateNickname && isDuplicate(inputNicknameValue)) {
             setShowDuplicateNickame(true);
         }
@@ -79,9 +72,7 @@ function PokemonDetailContainer(props) {
         const onClickConfirm = () => {
             const { myPokemons, setMyPokemons } = state;
             setHasNickname(true);
-
             setMyPokemons([...myPokemons, { id: props.pokemon.id, nickname: inputNicknameValue }]);
-
             cleanup();
         };
         const cleanup = () => {
@@ -97,12 +88,10 @@ function PokemonDetailContainer(props) {
             </Button>
         );
 
-        // const warningIcon = <FontAwesomeIcon size="1x" icon={faExclamationTriangle}></FontAwesomeIcon>;
-        const warningIcon = <Image src="/exclamation-triangle.svg" height={30} width={30} />;
+        const warningIcon = <i className="fas fa-exclamation-triangle"></i>;
 
         return (
             <Modal show={true} onClose={onClickGiveNickname} actionBtn={btn} title="Add nickname">
-                {/* <p style={{ marginBottom: "1rem" }}>Nickname for pokemon:</p> */}
                 <Input
                     value={inputNicknameValue}
                     onChange={onChangeInputNickname}
@@ -120,46 +109,53 @@ function PokemonDetailContainer(props) {
         <Container>
             {isCatched && !hasNickname && renderModalInputNickname()}
             <Header>
-                <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                    <div style={{ width: "24px", cursor: "pointer" }}>
-                        {/* <Link passHref href="/"> */}
-                        <span onClick={onClickBack}>
-                            <Image src="/chevron-circle-left.svg" height={30} width={30} />
-                            {/* <FontAwesomeIcon size="1x" icon={faChevronCircleLeft}></FontAwesomeIcon> */}
+                <HeaderTop>
+                    <div className="going-back">
+                        <span onClick={onClickBack} className="icon">
+                            <i className="fas fa-chevron-circle-left"></i>
                         </span>
-                        {/* </Link> */}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        {/* {!isCatched ? "try again" : "success"} */}
+                    <div className="catch">
                         {catchResult && (
-                            <span style={{ fontSize: "0.8rem", marginRight: "1rem", color: "#9FA5C0" }}>
+                            <span className="catch-result" style={{}}>
                                 {catchResult}
                             </span>
                         )}
                         <Button onClick={onCLickCatch}>Catch</Button>
                     </div>
-                </div>
+                </HeaderTop>
                 <PokemonName>{capitalizeFirstLetter(pokemon.name)}</PokemonName>
-                {/* <TypeLabelGroup types={pokemon.types} /> */}
             </Header>
             <ImageMove>
-                <PokemonImageContainer>
-                    <PokemonImage
-                        src={getPokemonImage()}
-                        alt={pokemon.name}
-                        layout="responsive"
-                        width={300}
-                        height={300}
-                    />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <span style={{ marginRight: "10px" }}>Types: </span> <TypeLabelGroup types={pokemon.types} />
-                    </div>
-                </PokemonImageContainer>
+                <PokemonImageInfoContainer>
+                    <PokemonImage src={getPokemonImage()} alt={pokemon.name} width={300} height={300} />
+                    <InfoContainer>
+                        <HeightWeight>
+                            <div className="block">
+                                <span className="label">Height: </span> {pokemon.height / 10} m
+                            </div>
+                            <div className="block">
+                                <span className="label">Weight: </span> {pokemon.weight / 10} kg
+                            </div>
+                        </HeightWeight>
+                        <TypeAbility>
+                            <div className="block">
+                                <span className="label">Types: </span> <TypeLabelGroup types={pokemon.types} />
+                            </div>
+                            <div className="block ability">
+                                <span className="label">Abilities: </span>{" "}
+                                <AbilityLabelGroup abilities={pokemon.abilities} />
+                            </div>
+                        </TypeAbility>
+                    </InfoContainer>
+                </PokemonImageInfoContainer>
                 <MoveContainer>
-                    <h3 className="move-title">Moves: </h3>
+                    <div className="move-title">Moves: </div>
                     <div className="move-list">
                         {pokemon.moves.map((move) => (
-                            <MoveLabel key={move.move.name} style={{ paddingRight: 5, paddingLeft: 5 }}>{move.move.name}</MoveLabel>
+                            <MoveLabel key={move.move.name} style={{ paddingRight: 5, paddingLeft: 5 }}>
+                                {move.move.name}
+                            </MoveLabel>
                         ))}
                     </div>
                 </MoveContainer>
@@ -175,7 +171,85 @@ const Container = styled.div`
     padding: 1em;
 `;
 
-const PokemonImageContainer = styled.div`
+const HeaderTop = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .going-back {
+        width: 24px;
+        cursor: pointer;
+        .icon {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            &:hover {
+                color: red;
+            }
+        }
+    }
+    .catch {
+        display: flex;
+        align-items: center;
+        .catch-result {
+            fontsize: 0.8rem;
+            marginright: 1rem;
+            color: #9fa5c0;
+        }
+    }
+`;
+
+const InfoContainer = styled.div`
+    display: flex;
+    flexwrap: wrap;
+    flex-direction: column;
+`;
+
+const HeightWeight = styled.div`
+    display: flex;
+    justify-content: space-between;
+    .block {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        .label {
+            margin-right: 10px;
+        }
+    }
+`;
+
+const TypeAbility = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    .block {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        .label {
+            margin-right: 10px;
+        }
+        .ability-item,
+        .type-item {
+            margin-right: 10px;
+        }
+    }
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+        .block.ability {
+            .label {
+                margin-right: 0;
+                text-align: right;
+            }
+            .ability-item {
+                margin-right: 0;
+                margin-left: 10px;
+            }
+        }
+    }
+`;
+
+const PokemonImageInfoContainer = styled.div`
     min-width: 300px;
     display: flex;
     justify-content: center;
@@ -192,7 +266,7 @@ const PokemonImage = styled.img`
 
 const ImageMove = styled.div`
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     > div {
         margin-top: 1rem;
     }

@@ -22,6 +22,8 @@ export const GET_POKEMON = gql`
         pokemon(name: $name) {
             id
             name
+            height
+            weight
             abilities {
                 ability {
                     name

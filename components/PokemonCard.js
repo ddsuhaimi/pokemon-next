@@ -1,25 +1,25 @@
 import React from "react";
-import Link from "next/link";
 import styled from "@emotion/styled";
-import Button from "../components/Button";
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 import { useAppContext } from "../context/state";
 import { useRouter } from "next/router";
-import Image from "next/image";
 function Pokemon({ pokemon, isOnMyPokemonPage }) {
     const state = useAppContext();
     const router = useRouter();
-    const onClickBtnCard = () => {
-        const { setActivePokemon } = state;
-        setActivePokemon(pokemon);
-    };
 
-    const onClickRemove = () => {
+    const onClickRemove = (e) => {
         const { myPokemons } = state;
         state.setMyPokemons(myPokemons.filter((p) => !(p.id === pokemon.id && p.nickname === pokemon.nickname)));
     };
-    const onClickCard = () => {
-        router.push(`/pokemons/${pokemon.name}`);
+    const onClickCard = (e) => {
+        // only go to detail page when clicked outside delete icon
+        if (isOnMyPokemonPage && !e.target.className.includes("fas")) {
+            router.push(`/pokemons/${pokemon.name}`);
+        }
+
+        if (!isOnMyPokemonPage) {
+            router.push(`/pokemons/${pokemon.name}`);
+        }
     };
 
     const getNumberOfOwn = () => {
@@ -31,47 +31,25 @@ function Pokemon({ pokemon, isOnMyPokemonPage }) {
                 <PokemonImg src={pokemon.image} alt={pokemon.name} width={150} height={150} />
 
                 {isOnMyPokemonPage && (
-                    <span
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                            fontSize: "1rem",
-                            color: "red",
-                            height: "20px",
-                            width: "20px",
-                            cursor: "pointer",
-                        }}
-                    >
-                        <Image src="/trash-alt.svg" alt="remove" layout="fill" onClick={onClickRemove} />
-                    </span>
+                    <IconDelete onClick={onClickRemove}>
+                        <i className="fas fa-trash-alt"></i>
+                    </IconDelete>
                 )}
-                {/* <Image src={pokemon.image} alt={pokemon.name} layout="fill" /> */}
             </ImageContainer>
             <CardFooter>
                 <div className="left" style={{ textAlign: "left" }}>
                     <PokemonName className="pokemon__name">
                         {pokemon.name && capitalizeFirstLetter(pokemon.name)}
                     </PokemonName>
-                    {pokemon.nickname && <PokemonNickname>a.k.a {pokemon.nickname}</PokemonNickname>}
                 </div>
                 <div className="right" style={{ position: "relative" }}>
-                    {!isOnMyPokemonPage && <p>owned: {getNumberOfOwn()}</p>}
-                    {/* owned:  {getNumberOfOwn()} */}
-                    {/* <BtnAction>
-                        <Link
-                            href={{
-                                pathname: `/pokemons/${pokemon.name}`,
-                            }}
-                        >
-                            <Button onClick={onClickBtnCard}>More...</Button>
-                        </Link>
-                    </BtnAction> */}
+                    {isOnMyPokemonPage ? (
+                        <PokemonNickname>a.k.a {pokemon.nickname}</PokemonNickname>
+                    ) : (
+                        <p>owned: {getNumberOfOwn()}</p>
+                    )}
                 </div>
             </CardFooter>
-            {/* <div className="pokemon__detail">
-                <Link href={`/pokemons/${pokemon.name}`}>Detail</Link>
-            </div> */}
         </Container>
     );
 }
@@ -90,7 +68,7 @@ const Container = styled.div`
     cursor: pointer;
     transition: transform 250ms;
     &:hover {
-        transform: translateY(-10px);
+        transform: translateY(-3px);
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 50px 0px;
     }
 `;
@@ -120,6 +98,20 @@ const CardFooter = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
+
+const IconDelete = styled.span`
+    position: absolute;
+    top: 0;
+    right: 0;
+    fontsize: 1rem;
+    color: #ff5842;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    &:hover {
+        color: red;
+    }
 `;
 
 export default Pokemon;
