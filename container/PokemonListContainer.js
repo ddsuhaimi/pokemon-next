@@ -5,7 +5,7 @@ import PokemonCard from "../components/PokemonCard";
 import styled from "@emotion/styled";
 import { useAppContext } from "../context/state";
 
-function PokemonListContainer({ data, isOnMyPokemonPage }) {
+function PokemonListContainer({ pokemons, isOnMyPokemonPage }) {
     // const state = useAppContext();
     // const { loading, error, data } = useQuery(GET_POKEMONS, {
     //     variables: {
@@ -20,7 +20,7 @@ function PokemonListContainer({ data, isOnMyPokemonPage }) {
 
     return (
         <Container className="pokemonListContainer">
-            {data.pokemons?.results.map((pokemon, i) => (
+            {pokemons.map((pokemon, i) => (
                 <PokemonCard
                     key={pokemon.id + (isOnMyPokemonPage ? pokemon.nickname : 0)}
                     pokemon={pokemon}

@@ -16,38 +16,37 @@ import LoadMore from "../components/LoadMore";
 import Button from "../components/Button";
 
 export default function Home(props) {
-    // saving state immediately because props.data already exist (caused by SSR)
     const state = useAppContext();
 
-    const [tdata, setTData] = useState(props.data);
-    const [next, setNext] = useState(props.data.pokemons.results.length);
+    const [pokemons, setPokemons] = useState(state.pokemons);
     const [showReadMore, setShowReadMore] = useState(null);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const { loading, error, data, fetchMore } = useQuery(GET_POKEMONS, {
         variables: {
             limit: 10,
-            offset: next,
+            offset: pokemons.length,
         },
     });
 
     useEffect(() => {
-        if (!isLoadingMore && data) {
-            const currentPokemons = state.pokemons;
+        console.log('awal', isLoadingMore)
+        if (!isLoadingMore && data){
+            const currentPokemons = pokemons;
             const newPokemons = data.pokemons.results;
-            const allPokemons = currentPokemons.concat(newPokemons);
-            state.setPokemons(allPokemons);
-            setNext(allPokemons.length);
+            const allPokemons = currentPokemons.concat(newPokemons)
+            setPokemons(allPokemons)
+            state.setPokemons(allPokemons)
         }
     }, [isLoadingMore]);
+
 
     const onClickLoadMore = async () => {
         setIsLoadingMore(true);
         await fetchMore({
             variables: {
-                // limit: data.launches.cursor,
                 limit: 10,
-                offset: next,
+                offset: pokemons.length,
             },
         });
 
@@ -55,18 +54,16 @@ export default function Home(props) {
     };
 
     useEffect(() => {
-        if (props.data.pokemons.results.length <= state.pokemons || state.pokemons.length === 0) {
-            state.setPokemons(props.data.pokemons.results);
+        if (props.sPokemons.length > state.pokemons.length) {
+            setPokemons(props.sPokemons)
+            state.setPokemons(props.sPokemons)
+            setShowReadMore(true)
+        } else {
+            setPokemons(state.pokemons)
+            state.setPokemons(state.pokemons)
+            setShowReadMore(true)
         }
-        setTData(props.data);
-        setShowReadMore(true);
-    }, []);
-
-    // console.log(props.data, data);
-
-    // useEffect(() => {
-    //     if (data) state.setPokemons(data.pokemons.results);
-    // }, [data]);
+    }, [state]);
     return (
         <Layout>
             <Head>
@@ -76,9 +73,8 @@ export default function Home(props) {
             <Header />
             <MainContainer>
                 <FixedMainContainer>
-                    <PokemonListContainer data={{ pokemons: { results: state.pokemons } }} />
+                    {pokemons && <PokemonListContainer pokemons={pokemons} />}
                     <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
-                        {/* <Button onClick={onClickLoadMore}>Load more</Button> */}
                         {showReadMore && <Button onClick={onClickLoadMore}>Load more</Button>}
                     </div>
                 </FixedMainContainer>
@@ -101,7 +97,7 @@ export async function getServerSideProps() {
     return {
         props: {
             // data: apolloClient.cache.extract(),
-            data: res.data,
+            sPokemons: res.data.pokemons.results,
         },
     };
 }

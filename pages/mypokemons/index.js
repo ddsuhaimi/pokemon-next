@@ -8,7 +8,7 @@ import { useAppContext } from "../../context/state";
 import Link from "next/link";
 
 function index() {
-    const [data, setData] = useState([]);
+    const [pokemons, setPokemons] = useState([]);
     const state = useAppContext();
 
     useEffect(() => {
@@ -22,11 +22,7 @@ function index() {
             const matchedPokemon = pokemons.find((poke) => poke.id === p.id);
             data = [...data, { ...matchedPokemon, nickname: p.nickname }];
         });
-        setData({
-            pokemons: {
-                results: data,
-            },
-        });
+        setPokemons(data);
     };
 
     const noPokemon = () => {
@@ -46,7 +42,7 @@ function index() {
             <MainContainer>
                 <FixedMainContainer>
                     {state.myPokemons.length > 0 && state.pokemons.length > 0 ? (
-                        <PokemonListContainer data={data} isOnMyPokemonPage={true} />
+                        <PokemonListContainer pokemons={pokemons} isOnMyPokemonPage={true} />
                     ) : (
                         noPokemon()
                     )}
