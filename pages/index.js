@@ -4,9 +4,9 @@ import styled from "@emotion/styled";
 
 import { useAppContext } from "../context/state";
 
-import Button from "../components/Button";
+import Button from "../components/Button/Button";
 import FixedMainContainer from "../container/FixedMainContainer";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Layout from "../container/Layout";
 import MainContainer from "../container/MainContainer";
 import PokemonListContainer from "../container/PokemonListContainer";

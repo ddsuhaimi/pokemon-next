@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
-import { useAppContext } from "../context/state";
+import { capitalizeFirstLetter } from "../../lib/helpers/stringHelper";
+import { useAppContext } from "../../context/state";
 import { useRouter } from "next/router";
 const Pokemon = ({ pokemon, isOnMyPokemonPage }) => {
     const state = useAppContext();

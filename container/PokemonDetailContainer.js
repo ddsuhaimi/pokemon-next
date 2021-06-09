@@ -4,12 +4,12 @@ import styled from "@emotion/styled";
 
 import { useAppContext } from "../context/state";
 
-import AbilityLabelGroup from "../components/AbilityLabelGroup";
-import AlertMessage from "../components/AlertMessage";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import Modal from "../components/Modal";
-import TypeLabelGroup from "../components/TypeLabelGroup";
+import AbilityLabelGroup from "../components/Ability/AbilityLabelGroup";
+import AlertMessage from "../components/AlertMessage/AlertMessage";
+import Button from "../components/Button/Button";
+import Input from "../components/Input/Input";
+import Modal from "../components/Modal/Modal";
+import TypeLabelGroup from "../components/Type/TypeLabelGroup";
 
 import { capitalizeFirstLetter } from "../lib/helpers/stringHelper";
 

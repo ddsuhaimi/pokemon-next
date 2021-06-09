@@ -3,13 +3,13 @@ import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
 import FixedMainContainer from "../../container/FixedMainContainer";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import Layout from "../../container/Layout";
 import MainContainer from "../../container/MainContainer";
 import PokemonDetailContainer from "../../container/PokemonDetailContainer";
 
 import { GET_POKEMON } from "../../graphql/apis";
-import InfoState from "../../components/InfoState";
+import InfoState from "../../components/InfoState/InfoState";
 
 const PokemonDetail = (props) => {
     const router = useRouter();

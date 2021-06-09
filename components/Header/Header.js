@@ -2,9 +2,9 @@ import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
-import { useAppContext } from "../context/state";
+import { useAppContext } from "../../context/state";
 
-import Button from "./Button";
+import Button from "../Button/Button";
 
 const Header = () => {
     const state = useAppContext();

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import PokemonCard from "../components/PokemonCard";
+import PokemonCard from "../components/Pokemon/PokemonCard";
 
 const PokemonListContainer = ({ pokemons, isOnMyPokemonPage }) => {
     return (

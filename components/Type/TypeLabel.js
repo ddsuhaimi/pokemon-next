@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { TYPE_COLOR } from "../constants/enums";
+import { TYPE_COLOR } from "../../constants/enums";
 const TypeLabel = ({ type }) => {
     return (
         <TypeLabelContainer
