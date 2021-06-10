@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@apollo/client": "^3.3.19",
@@ -16,5 +19,14 @@
     "next-pwa": "^5.2.21",
     "react": "17.0.2",
     "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.31.2",
+    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^13.1.9",
+    "babel-jest": "^27.0.2",
+    "jest": "^27.0.4",
+    "react-test-renderer": "^17.0.2"
   }
 }
