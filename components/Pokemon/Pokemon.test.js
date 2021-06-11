@@ -5,12 +5,9 @@ test("render pokemon card correctly correctly", () => {
   const pokemon = {
     id: 1,
     name: "ilvysaur",
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
   };
-  const { getByText } = render(
-    <PokemonCard pokemon={pokemon} isOnMyPokemonPage={false} />
-  );
+  const { getByText } = render(<PokemonCard pokemon={pokemon} isOnMyPokemonPage={false} />);
 
   const displayedImage = document.querySelector("img");
   expect(getByText("Ilvysaur")).toBeInTheDocument();
@@ -22,12 +19,9 @@ test("render pokemon card correctly correctly on is my pokemon page", () => {
     id: 1,
     name: "ilvysaur",
     nickname: "abc",
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
   };
-  const { getByText } = render(
-    <PokemonCard pokemon={pokemon} isOnMyPokemonPage={true} />
-  );
+  const { getByText } = render(<PokemonCard pokemon={pokemon} isOnMyPokemonPage={true} />);
 
   const displayedImage = document.querySelector("img");
   expect(getByText("Ilvysaur")).toBeInTheDocument();

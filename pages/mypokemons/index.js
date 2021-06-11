@@ -45,10 +45,7 @@ const Index = () => {
       <MainContainer>
         <FixedMainContainer>
           {state.myPokemons.length > 0 && state.pokemons.length > 0 ? (
-            <PokemonListContainer
-              pokemons={pokemons}
-              isOnMyPokemonPage={true}
-            />
+            <PokemonListContainer pokemons={pokemons} isOnMyPokemonPage={true} />
           ) : (
             renderNoPokemon()
           )}

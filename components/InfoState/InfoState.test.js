@@ -10,7 +10,5 @@ test("render loading", () => {
 test("render error", () => {
   const { getByText } = render(<InfoState state="error" />);
 
-  expect(
-    getByText("Error. Make sure your internet is working")
-  ).toBeInTheDocument();
+  expect(getByText("Error. Make sure your internet is working")).toBeInTheDocument();
 });

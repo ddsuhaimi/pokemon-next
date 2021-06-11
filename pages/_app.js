@@ -5,17 +5,17 @@ import { useApollo } from "../lib/apolloClient";
 import { AppWrapper } from "../context/state";
 
 const MyApp = ({ Component, pageProps }) => {
-    const apolloClient = useApollo(pageProps.initialApolloState);
+  const apolloClient = useApollo(pageProps.initialApolloState);
 
-    return (
-        <ApolloProvider client={apolloClient}>
-            <AppWrapper>
-                <div>
-                    <Component {...pageProps} />
-                </div>
-            </AppWrapper>
-        </ApolloProvider>
-    );
+  return (
+    <ApolloProvider client={apolloClient}>
+      <AppWrapper>
+        <div>
+          <Component {...pageProps} />
+        </div>
+      </AppWrapper>
+    </ApolloProvider>
+  );
 };
 
 export default MyApp;

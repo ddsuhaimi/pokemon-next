@@ -58,11 +58,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
   };
 
   const isDuplicate = () => {
-    return (
-      state.myPokemons.filter(
-        (p) => p.id === pokemon.id && p.nickname === inputNicknameValue
-      ).length > 0
-    );
+    return state.myPokemons.filter((p) => p.id === pokemon.id && p.nickname === inputNicknameValue).length > 0;
   };
 
   const renderModalInputNickname = () => {
@@ -75,10 +71,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
     const onClickConfirm = () => {
       const { myPokemons, setMyPokemons } = state;
       setHasNickname(true);
-      setMyPokemons([
-        ...myPokemons,
-        { id: pokemon.id, nickname: inputNicknameValue },
-      ]);
+      setMyPokemons([...myPokemons, { id: pokemon.id, nickname: inputNicknameValue }]);
       cleanup();
     };
     const cleanup = () => {
@@ -89,10 +82,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
       setInputNicknameValue("");
     };
     const btn = (
-      <Button
-        disabled={inputNicknameValue.length === 0 || showDuplicateNickname}
-        onClick={onClickConfirm}
-      >
+      <Button disabled={inputNicknameValue.length === 0 || showDuplicateNickname} onClick={onClickConfirm}>
         Confirm
       </Button>
     );
@@ -100,12 +90,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
     const warningIcon = <i className="fas fa-exclamation-triangle"></i>;
 
     return (
-      <Modal
-        show={true}
-        onClose={onClickGiveNickname}
-        actionBtn={btn}
-        title="Add nickname"
-      >
+      <Modal show={true} onClose={onClickGiveNickname} actionBtn={btn} title="Add nickname">
         <Input
           value={inputNicknameValue}
           onChange={onChangeInputNickname}
@@ -113,12 +98,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
           placeholder="Type the nickname here"
         />
 
-        {showDuplicateNickname && (
-          <AlertMessage
-            icon={warningIcon}
-            text="Name already exists. Choose another one."
-          />
-        )}
+        {showDuplicateNickname && <AlertMessage icon={warningIcon} text="Name already exists. Choose another one." />}
       </Modal>
     );
   };
@@ -146,12 +126,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
       </Header>
       <ImageMove>
         <PokemonImageInfoContainer>
-          <PokemonImage
-            src={pokemon.sprites.front_default}
-            alt={pokemon.name}
-            width={300}
-            height={300}
-          />
+          <PokemonImage src={pokemon.sprites.front_default} alt={pokemon.name} width={300} height={300} />
           <InfoContainer>
             <HeightWeight>
               <div className="block">
@@ -163,12 +138,10 @@ const PokemonDetailContainer = ({ pokemon }) => {
             </HeightWeight>
             <TypeAbility>
               <div className="block">
-                <span className="label">Types: </span>{" "}
-                <TypeLabelGroup types={pokemon.types} />
+                <span className="label">Types: </span> <TypeLabelGroup types={pokemon.types} />
               </div>
               <div className="block ability">
-                <span className="label">Abilities: </span>{" "}
-                <AbilityLabelGroup abilities={pokemon.abilities} />
+                <span className="label">Abilities: </span> <AbilityLabelGroup abilities={pokemon.abilities} />
               </div>
             </TypeAbility>
           </InfoContainer>
@@ -177,10 +150,7 @@ const PokemonDetailContainer = ({ pokemon }) => {
           <div className="move-title">Moves: </div>
           <div className="move-list">
             {pokemon.moves.map((move) => (
-              <MoveLabel
-                key={move.move.name}
-                style={{ paddingRight: 5, paddingLeft: 5 }}
-              >
+              <MoveLabel key={move.move.name} style={{ paddingRight: 5, paddingLeft: 5 }}>
                 {move.move.name}
               </MoveLabel>
             ))}
